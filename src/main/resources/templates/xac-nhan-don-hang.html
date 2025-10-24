@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Xác nhận đơn hàng - SHOPAPPDEMO</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="main-header">
+        <!-- Header giữ nguyên -->
+    </header>
+
+    <main class="order-confirmation">
+        <h1>💳 Thanh toán</h1>
+
+        <div th:if="${message}">
+            <p th:text="${message}" style="color: #28a745; font-weight: bold; text-align: center;"></p>
+        </div>
+
+        <h2>Thông tin khách hàng</h2>
+        <ul>
+            <li><strong>Họ và tên:</strong> <span th:text="${order.customerName}">Tên</span></li>
+            <li><strong>Số điện thoại:</strong> <span th:text="${order.phone}">SĐT</span></li>
+            <li><strong>Email:</strong> <span th:text="${order.email}">Email</span></li>
+            <li><strong>Địa chỉ:</strong> <span th:text="${order.address}">Địa chỉ</span></li>
+            <li><strong>Phương thức thanh toán:</strong> <span th:text="${order.paymentMethod}">COD</span></li>
+        </ul>
+
+        <form th:action="@{/xac-nhan-cuoi}" method="post">
+            <button type="submit" class="btn-order">✅ Xác nhận đơn hàng</button>
+        </form>
+
+        <div class="cart-navigation">
+            <a href="/don-hang" class="btn-home">⬅ Quay lại</a>
+        </div>
+    </main>
+</body>
+</html>

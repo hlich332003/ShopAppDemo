@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - SHOPAPPDEMO</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <img src="https://via.placeholder.com/50x50?text=Logo" alt="Logo Shop">
+            <div class="site-title">
+                <h1>SHOPAPPDEMO</h1>
+                <p>Trải nghiệm mua sắm dễ dàng</p>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/san-pham">Sản phẩm</a></li>
+                <li><a th:href="@{/gio-hang}" class="cart-link">🛒 Giỏ hàng <span class="cart-count">0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="cart-container">
+    <h1>🛒 Giỏ hàng của bạn</h1>
+
+    <section class="cart-items-grid">
+        <div th:each="item : ${items}" class="cart-item-card">
+            <div class="cart-item-info">
+                <h3 th:text="${item.product.name}">Tên sản phẩm</h3>
+                <p class="price" th:text="'₫' + ${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')}">0₫</p>
+                <p class="quantity" th:text="'Số lượng: ' + ${item.quantity}">Số lượng: 1</p>
+                <p class="subtotal" th:text="'Tổng: ₫' + ${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 0, 'POINT')}">Tổng: 0₫</p>
+            </div>
+            <form th:action="@{/gio-hang/xoa}" method="post" class="cart-item-action">
+                <input type="hidden" name="productId" th:value="${item.product.id}">
+                <button type="submit" class="btn-delete">🗑️ Xóa</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="total-section">
+        <strong>Tổng cộng: </strong>
+        <span th:text="'₫' + ${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}">0₫</span>
+    </div>
+
+    <div class="cart-navigation">
+    <a href="/don-hang" class="btn-order">📦 Đặt hàng</a>
+</div>
+
+    <div class="cart-navigation">
+        <a href="/" class="btn-home">🏠 Về trang chủ</a>
+    </div>
+</main>
+
+    <script src="/js/utils.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOPAPPDEMO - Trang chủ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <img src="/images/Free-Logos-PNG-Image.png" alt="Logo Shop">
+            <div class="site-title">
+                <h1>SHOPAPPDEMO</h1>
+                <p>Trải nghiệm mua sắm dễ dàng</p>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/" class="active">Trang chủ</a></li>
+                <li><a href="/san-pham">Sản phẩm</a></li>
+                <li><a th:href="@{/gio-hang}" class="cart-link">🛒 Giỏ hàng <span class="cart-count">0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Chào mừng đến với SHOPAPPDEMO</h1>
+            <p>Nơi mua sắm tin cậy cho mọi người</p>
+            <a href="/san-pham" class="cta-button">Mua sắm ngay</a>
+        </section>
+
+        <section class="categories-section">
+            <h2>🔥 Sản Phẩm Nổi Bật</h2>
+            <div class="products-grid">
+                <div th:each="product : ${featuredProducts}" class="product-card">
+                    <img th:src="@{${product.image}}" th:alt="${product.name}" loading="lazy">
+                    <div class="product-info">
+                        <h3 th:text="${product.name}">Product Name</h3>
+                        <p class="price" th:text="'₫' + ${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">0₫</p>
+                        <p class="stock" th:text="'Còn ' + ${product.stock} + ' sản phẩm'">Còn 0 sản phẩm</p>
+                        <a th:href="@{/chi-tiet-san-pham(id=${product.id})}" class="btn-view-detail">👁️ Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script th:src="@{/js/utils.js}"></script>
+</body>
+</html>

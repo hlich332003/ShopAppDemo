@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm - SHOPAPPDEMO</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <img src="/images/Free-Logos-PNG-Image.png" alt="Logo Shop">
+            <div class="site-title">
+                <h1>SHOPAPPDEMO</h1>
+                <p>Trải nghiệm mua sắm dễ dàng</p>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/san-pham" class="active">Sản phẩm</a></li>
+                <li><a href="/gio-hang" class="cart-link">🛒 Giỏ hàng <span class="cart-count">0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>🛍️ <span th:text="${categoryName}">Sản phẩm</span></h1>
+        
+        <div class="filter-section">
+            <select id="category-filter" onchange="filterProducts()">
+                <option value="">Tất cả danh mục</option>
+                <option th:each="category : ${categories}" 
+                        th:value="${category}" 
+                        th:text="${category}"></option>
+            </select>
+        </div>
+
+        <div class="products-grid">
+            <div th:each="product : ${products}" class="product-card">
+                <img th:src="'/images/' + ${#strings.substring(product.image, '/images/'.length())}" th:alt="${product.name}" loading="lazy">
+                <div class="product-info">
+                    <h3 th:text="${product.name}">Product Name</h3>
+                    <p class="price" th:text="'₫' + ${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">0₫</p>
+                    <p class="stock" th:text="'Còn ' + ${product.stock} + ' sản phẩm'">Còn 0 sản phẩm</p>
+                    <a th:href="@{/chi-tiet-san-pham(id=${product.id})}" class="btn-view-detail">👁️ Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script th:src="@{/js/utils.js}"></script>
+    <script>
+        function filterProducts() {
+            const category = document.getElementById('category-filter').value;
+            if (category) {
+                window.location.href = '/san-pham?category=' + encodeURIComponent(category);
+            } else {
+                window.location.href = '/san-pham';
+            }
+        }
+        
+        // Set selected category
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryName = "[[${categoryName}]]";
+            const filter = document.getElementById('category-filter');
+            if (filter && categoryName !== 'Tất cả sản phẩm') {
+                filter.value = categoryName;
+            }
+        });
+    </script>
+</body>
+</html>
