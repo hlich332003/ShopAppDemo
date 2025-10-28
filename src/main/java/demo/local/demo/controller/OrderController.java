@@ -43,12 +43,13 @@ public class OrderController {
 
     // Tạo đơn hàng tạm sau khi nhập thông tin khách hàng
     @PostMapping("/xac-nhan-don-hang")
-    public String confirmOrder(@RequestParam String fullName,
-                               @RequestParam String phone,
-                               @RequestParam String email,
-                               @RequestParam String address,
-                               @RequestParam String paymentMethod,
-                               Model model) {
+    public String confirmOrder(
+        @RequestParam String fullName,
+        @RequestParam String phone,
+        @RequestParam String email,
+        @RequestParam String address,
+        @RequestParam String paymentMethod,
+        Model model) {
         List<CartItem> items = cartService.getItems();
         if (items.isEmpty()) {
             model.addAttribute("message", "Giỏ hàng trống.");
